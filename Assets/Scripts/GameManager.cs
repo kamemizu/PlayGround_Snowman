@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,8 +26,15 @@ public class GameManager : MonoBehaviour
     public static State state;
     public float timer;
     private float startTimer;
+    private float endTimer;
+
+    public static Vector3 p1Size;
+    public static Vector3 p2Size;
+    public static Vector3 p3Size;
+    public static Vector3 p4Size;
     void Start()
     {
+        endTimer = 3;
         state = State.Ready;
         timer = 20.0f;
         startTimer = 4;
@@ -43,13 +51,16 @@ public class GameManager : MonoBehaviour
         switch (state)
         {
             case State.Ready:
+                Debug.Log("Ready");
                 Count();
                 break;
             case State.InGame:
+                Debug.Log("InGame");
                 CountDownTimer.SetActive(true);
                 TimerCount();
                 break;
             case State.Result:
+                Debug.Log("Result");
                 Finish();
                 break;
         }
@@ -101,5 +112,31 @@ public class GameManager : MonoBehaviour
 
     void Finish()
     {
+        endTimer -= Time.deltaTime;
+        if(endTimer < 0)
+        {
+            p1Size = P1.transform.localScale;
+            p2Size = P2.transform.localScale;
+            p3Size = P3.transform.localScale;
+            p4Size = P4.transform.localScale;
+            SceneManager.LoadScene("Result");
+        }
+    }
+
+    public static Vector3 getP1Size()
+    {
+        return p1Size;
+    }
+    public static Vector3 getP2Size()
+    {
+        return p2Size;
+    }
+    public static Vector3 getP3Size()
+    {
+        return p3Size;
+    }
+    public static Vector3 getP4Size()
+    {
+        return p4Size;
     }
 }

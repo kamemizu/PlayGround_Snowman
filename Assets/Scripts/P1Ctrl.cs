@@ -49,8 +49,10 @@ public class P1Ctrl : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
+                    Debug.Log("1P");
                     if (this.gameObject.name == "1P")
                     {
+                        Debug.Log("1P");
                         Move();
                     }
                 }
