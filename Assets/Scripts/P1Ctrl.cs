@@ -30,58 +30,66 @@ public class P1Ctrl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //スクロール速度を減速
-        //scrollSpeed--;
+        switch (GameManager.state)
+        {
+            case GameManager.State.Ready:
+                break;
+            case GameManager.State.InGame:
+                ground1.transform.Translate(Vector2.down * scrollSpeed * Time.deltaTime);
+                if (ground1.transform.position.y < cameraArea.y * 2)
+                {
+                    ground1.transform.position = new Vector2(ground1.transform.position.x, (Camera.main.transform.position.y - cameraArea.y) * 2);
+                }
 
-        ground1.transform.Translate(Vector2.down * scrollSpeed * Time.deltaTime);
-        if (ground1.transform.position.y < cameraArea.y * 2)
-        {
-            ground1.transform.position = new Vector2(ground1.transform.position.x, (Camera.main.transform.position.y - cameraArea.y) * 2);
+                ground2.transform.Translate(Vector2.down * scrollSpeed * Time.deltaTime);
+                if (ground2.transform.position.y < cameraArea.y * 2)
+                {
+                    ground2.transform.position = new Vector2(ground2.transform.position.x, (Camera.main.transform.position.y - cameraArea.y) * 2);
+                }
+
+                if (Input.GetKeyDown(KeyCode.Q))
+                {
+                    if (this.gameObject.name == "1P")
+                    {
+                        Move();
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    if (this.gameObject.name == "2P")
+                    {
+                        Move();
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.U))
+                {
+                    if (this.gameObject.name == "3P")
+                    {
+                        Move();
+                    }
+                }
+                if (Input.GetKeyDown(KeyCode.P))
+                {
+                    if (this.gameObject.name == "4P")
+                    {
+                        Move();
+                    }
+                }
+                add_scale = scrollSpeed * Time.deltaTime * 0.001f;
+                //移動距離で大きさ変更
+                snowball_scale += new Vector3(add_scale, add_scale, 0);
+                transform.localScale = snowball_scale;
+                break;
+            case GameManager.State.Result:
+                transform.Translate(Vector2.up * Time.deltaTime * scrollSpeed);
+                break;
         }
 
-        ground2.transform.Translate(Vector2.down * scrollSpeed * Time.deltaTime);
-        if (ground2.transform.position.y < cameraArea.y * 2)
-        {
-            ground2.transform.position = new Vector2(ground2.transform.position.x, (Camera.main.transform.position.y - cameraArea.y) * 2);
-        }
-
-        //ボタンを押した時に前進
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if(this.gameObject.name == "1P")
-            {
-                Move();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (this.gameObject.name == "2P")
-            {
-                Move();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            if (this.gameObject.name == "3P")
-            {
-                Move();
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            if (this.gameObject.name == "4P")
-            {
-                Move();
-            }
-        }
-        add_scale = scrollSpeed * Time.deltaTime * 0.001f;
-        //移動距離で大きさ変更
-        snowball_scale += new Vector3(add_scale, add_scale, 0);
-        transform.localScale = snowball_scale;
     }
 
     private void Move()
     {
         scrollSpeed += 0.5f;
     }
+
 }
