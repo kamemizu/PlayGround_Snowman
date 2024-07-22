@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class P1Ctrl : MonoBehaviour
 {
+    private Animator animator;
+    private const string rollspeed = "rollspeed";
     //雪玉のスケール
     Vector3 snowball_scale;
     //肥大化度
@@ -25,6 +27,7 @@ public class P1Ctrl : MonoBehaviour
         snowball_scale = this.transform.localScale;
         add_scale = 0; 
         scrollSpeed = 0;
+        animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -83,12 +86,13 @@ public class P1Ctrl : MonoBehaviour
                 transform.localScale = snowball_scale;
                 break;
             case GameManager.State.Result:
-                transform.Translate(Vector2.up * Time.deltaTime * scrollSpeed);
+                transform.Translate(Time.deltaTime * scrollSpeed * -0.5f, Time.deltaTime * scrollSpeed, 0);
                 break;
         }
+        animator.SetFloat(rollspeed, scrollSpeed * 0.1f);
 
     }
-
+     
     private void Move()
     {
         scrollSpeed += 0.5f;
