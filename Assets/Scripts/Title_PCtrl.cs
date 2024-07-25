@@ -39,36 +39,35 @@ public class Title_PCtrl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("1P");
-            if (this.gameObject.name == "1P")
+            Debug.Log("ball_a_1");
+            if (this.gameObject.name == "ball_a_1")
             {
-                Debug.Log("1P");
                 Move();
             }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (this.gameObject.name == "2P")
+            if (this.gameObject.name == "ball_b_1")
             {
                 Move();
             }
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            if (this.gameObject.name == "3P")
+            if (this.gameObject.name == "ball_x_1")
             {
                 Move();
             }
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (this.gameObject.name == "4P")
+            if (this.gameObject.name == "ball_y_1")
             {
                 Move();
             }
         }
 
-        animator.SetFloat(rollspeed, scrollSpeed * 0.1f);
+        animator.SetFloat(rollspeed, scrollSpeed * 0.2f);
         if(scrollSpeed > 0)
         {
             scrollSpeed -= Time.deltaTime;

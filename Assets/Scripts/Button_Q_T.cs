@@ -19,7 +19,7 @@ public class Button_Q_T : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && GameManager.state == GameManager.State.InGame)
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             // ‰æ‘œ‚ğØ‚è‘Ö‚¦‚Ü‚·
             image.sprite = button_down;
