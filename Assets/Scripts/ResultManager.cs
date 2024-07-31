@@ -2,9 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    //エフェクトタイマー
+    float effectTimer = 0;
+    //エフェクトオブジェクト
+    [SerializeField] GameObject effect1;
+    [SerializeField] GameObject effect2;
+    [SerializeField] GameObject effect3;
+    [SerializeField] GameObject effect4;
+    //雪だるま装飾
+    [SerializeField] Sprite head;
+    [SerializeField] Sprite body;
+    [SerializeField] Sprite hip;
+    [SerializeField] Sprite foot;
+
+
     //カメラの表示エリア
     Vector2 cameraArea;
     float timer = 4;
@@ -15,6 +30,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField] GameObject p2;
     [SerializeField] GameObject p3;
     [SerializeField] GameObject p4;
+
     Vector3 p1Size;
     Vector3 p2Size;
     Vector3 p3Size;
@@ -32,6 +48,10 @@ public class ResultManager : MonoBehaviour
         p3.transform.localScale = p3Size;
         p4.transform.localScale = p4Size;
         cameraY = camera.transform.localPosition.y;
+        effect1.SetActive(false);
+        effect2.SetActive(false);
+        effect3.SetActive(false);
+        effect4.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,6 +69,38 @@ public class ResultManager : MonoBehaviour
                 cameraY += Time.deltaTime;
                 camera.transform.localPosition = new Vector3 (0, cameraY, 0);
                 camera.GetComponent<Camera>().orthographicSize += Time.deltaTime;
+            }
+            else
+            {
+                effectTimer += Time.deltaTime;
+                if(effectTimer > 0)
+                {
+                    // 変更対象のオブジェクトが持つ SpriteRenderer を取得
+                    var spriteRenderer = p1.GetComponent<SpriteRenderer>();
+                    effect1.SetActive(true);
+                    spriteRenderer.sprite = head;
+                }
+                if(effectTimer > 1)
+                {
+                    // 変更対象のオブジェクトが持つ SpriteRenderer を取得
+                    var spriteRenderer = p2.GetComponent<SpriteRenderer>();
+                    effect2.SetActive(true);
+                    spriteRenderer.sprite = body;
+                }
+                if (effectTimer > 2)
+                {
+                    // 変更対象のオブジェクトが持つ SpriteRenderer を取得
+                    var spriteRenderer = p3.GetComponent<SpriteRenderer>();
+                    effect3.SetActive(true);
+                    spriteRenderer.sprite = hip;
+                }
+                if (effectTimer > 3)
+                {
+                    // 変更対象のオブジェクトが持つ SpriteRenderer を取得
+                    var spriteRenderer = p4.GetComponent<SpriteRenderer>();
+                    effect4.SetActive(true);
+                    spriteRenderer.sprite = foot;
+                }
             }
         }
 
