@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public static Vector3 p2Size;
     public static Vector3 p3Size;
     public static Vector3 p4Size;
+
+    private AudioSource bgm;
     void Start()
     {
         endTimer = 3;
@@ -43,6 +45,7 @@ public class GameManager : MonoBehaviour
         Count2.SetActive(false);
         Count1.SetActive(false);
         Go.SetActive(false);
+        bgm = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -52,6 +55,7 @@ public class GameManager : MonoBehaviour
         {
             case State.Ready:
                 Debug.Log("Ready");
+                bgm.pitch = 0;
                 Count();
                 break;
             case State.InGame:
@@ -71,6 +75,18 @@ public class GameManager : MonoBehaviour
         if(timer > 0)
         {
             timer -= Time.deltaTime;
+            if(timer > 10)
+            {
+                bgm.pitch = 1.0f;
+            }
+            else if(timer > 5)
+            {
+                bgm.pitch = 1.1f;
+            }
+            else
+            {
+                bgm.pitch = 1.2f;
+            }
         }
         if(timer <= 0)
         {
