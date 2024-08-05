@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Count2;
     [SerializeField] GameObject Count1;
     [SerializeField] GameObject Go;
+    [SerializeField] GameObject Fin;
     public enum State
     {
         Ready,
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
         Count2.SetActive(false);
         Count1.SetActive(false);
         Go.SetActive(false);
+        Fin.SetActive(false);
         bgm = GetComponent<AudioSource>();
     }
 
@@ -128,6 +130,8 @@ public class GameManager : MonoBehaviour
 
     void Finish()
     {
+        Fin.SetActive(true);
+        bgm.pitch = 0;
         endTimer -= Time.deltaTime;
         if(endTimer < 0)
         {
