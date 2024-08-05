@@ -18,6 +18,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Count1;
     [SerializeField] GameObject Go;
     [SerializeField] GameObject Fin;
+    [SerializeField] GameObject FinCount5;
+    [SerializeField] GameObject FinCount4; 
+    [SerializeField] GameObject FinCount3;
+    [SerializeField] GameObject FinCount2;
+    [SerializeField] GameObject FinCount1;
     public enum State
     {
         Ready,
@@ -46,6 +51,11 @@ public class GameManager : MonoBehaviour
         Count2.SetActive(false);
         Count1.SetActive(false);
         Go.SetActive(false);
+        FinCount5.SetActive(false);
+        FinCount4.SetActive(false);
+        FinCount3.SetActive(false);
+        FinCount2.SetActive(false);
+        FinCount1.SetActive(false);
         Fin.SetActive(false);
         bgm = GetComponent<AudioSource>();
     }
@@ -62,7 +72,36 @@ public class GameManager : MonoBehaviour
                 break;
             case State.InGame:
                 Debug.Log("InGame");
-                CountDownTimer.SetActive(true);
+                if(timer > 5)
+                {
+                    CountDownTimer.SetActive(true);
+                }
+                if(timer < 5 && timer > 4)
+                {
+                    CountDownTimer.SetActive(false);
+                    FinCount5.SetActive(true);
+                }
+                if (timer < 4 && timer > 3)
+                {
+                    FinCount5.SetActive(false);
+                    FinCount4.SetActive(true);
+                }
+                if (timer < 3 && timer > 2)
+                {
+                    FinCount4.SetActive(false);
+                    FinCount3.SetActive(true);
+                }
+                if (timer < 2 && timer > 1)
+                {
+                    FinCount3.SetActive(false);
+                    FinCount2.SetActive(true);
+                }
+                if (timer < 1 && timer > 0)
+                {
+                    FinCount2.SetActive(false);
+                    FinCount1.SetActive(true);
+                }
+
                 TimerCount();
                 break;
             case State.Result:
@@ -130,6 +169,7 @@ public class GameManager : MonoBehaviour
 
     void Finish()
     {
+        FinCount1.SetActive(false);
         Fin.SetActive(true);
         bgm.pitch = 0;
         endTimer -= Time.deltaTime;

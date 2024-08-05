@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    [SerializeField] private GameObject hakusyu;
+    private AudioSource bgm;
     //エフェクトタイマー
     float effectTimer = 0;
     //エフェクトオブジェクト
@@ -39,6 +41,8 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bgm = GetComponent<AudioSource>();
+        bgm.pitch = 0;
         p1Size = GameManager.getP1Size();
         p2Size = GameManager.getP2Size();
         p3Size = GameManager.getP3Size();
@@ -100,6 +104,11 @@ public class ResultManager : MonoBehaviour
                     var spriteRenderer = p4.GetComponent<SpriteRenderer>();
                     effect4.SetActive(true);
                     spriteRenderer.sprite = foot;
+                    hakusyu.SetActive(true);
+                }
+                if (effectTimer > 4)
+                {
+                    bgm.pitch = 1;
                 }
             }
         }
