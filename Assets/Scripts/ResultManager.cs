@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    [SerializeField] private GameObject stoper;
+    [SerializeField] private Text snowmanHight;
     [SerializeField] private GameObject hakusyu;
+    [SerializeField] private GameObject drum;
+    [SerializeField] private GameObject jajan;
+    [SerializeField] private GameObject rulet;
     private AudioSource bgm;
     //エフェクトタイマー
     float effectTimer = 0;
@@ -20,6 +26,8 @@ public class ResultManager : MonoBehaviour
     [SerializeField] Sprite body;
     [SerializeField] Sprite hip;
     [SerializeField] Sprite foot;
+
+    private float snowmanTall = 0;
 
 
     //カメラの表示エリア
@@ -41,6 +49,7 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         bgm = GetComponent<AudioSource>();
         bgm.pitch = 0;
         p1Size = GameManager.getP1Size();
@@ -66,6 +75,11 @@ public class ResultManager : MonoBehaviour
         {
             timer -= Time.deltaTime;
         }
+        if(timer < 2)
+        {
+            drum.SetActive(true);
+            stoper.SetActive(false);
+        }
         if (timer < 0)
         {
             if(p1.transform.position.y + p1.transform.localScale.y * 10 > cameraArea.y)
@@ -76,6 +90,7 @@ public class ResultManager : MonoBehaviour
             }
             else
             {
+                drum.SetActive (false);
                 effectTimer += Time.deltaTime;
                 if(effectTimer > 0)
                 {
@@ -104,17 +119,32 @@ public class ResultManager : MonoBehaviour
                     var spriteRenderer = p4.GetComponent<SpriteRenderer>();
                     effect4.SetActive(true);
                     spriteRenderer.sprite = foot;
-                    hakusyu.SetActive(true);
                 }
                 if (effectTimer > 4)
                 {
-                    bgm.pitch = 1;
+                    if(snowmanTall < p1.transform.position.y + p1.transform.localScale.y * 10)
+                    {
+                        snowmanTall += Time.deltaTime;
+                        snowmanHight.text = string.Format("おおきさ\n" + "{0:##.###}" + "メートル", snowmanTall);
+                        rulet.SetActive(true);
+                    }
+                    else
+                    {
+                        rulet.SetActive(false);
+                        hakusyu.SetActive(true);
+                        jajan.SetActive(true);
+                        Invoke("BGMPitch1", 1.0f);
+                    }
                 }
             }
         }
 
     }
 
+    private void BGMPitch1()
+    {
+        bgm.pitch = 1;
+    }
     public void GoTitle()
     {
         SceneManager.LoadScene("Title");

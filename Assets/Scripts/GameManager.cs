@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         Result
     }
     public static State state;
-    public float timer;
+    public float timer = 20.0f;
     private float startTimer;
     private float endTimer;
 
@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
     {
         endTimer = 3;
         state = State.Ready;
-        timer = 20.0f;
         startTimer = 4;
         CountDownTimer.SetActive(false);
         Count3.SetActive(false);

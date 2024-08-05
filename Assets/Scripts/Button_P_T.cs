@@ -8,7 +8,7 @@ public class Button_P_T : MonoBehaviour
     float timer;
     [SerializeField] Sprite button_down;
     [SerializeField] Sprite button_up;
-    private Image image;
+    private Image image; bool up;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,15 +23,17 @@ public class Button_P_T : MonoBehaviour
         {
             // ‰æ‘œ‚ğØ‚è‘Ö‚¦‚Ü‚·
             image.sprite = button_down;
+            up = false;
             timer = 10;
         }
-        else if (timer <= 0)
+        else if (up)
         {
             image.sprite = button_up;
         }
-        else
+
+        if (Input.GetKeyUp(KeyCode.P))
         {
-            timer--;
+            up = true;
         }
     }
 }

@@ -9,6 +9,7 @@ public class Button_U : MonoBehaviour
     [SerializeField] Sprite button_down;
     [SerializeField] Sprite button_up;
     private Image image;
+    bool up;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,19 +20,24 @@ public class Button_U : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U) && GameManager.state == GameManager.State.InGame)
+        if (GameManager.state == GameManager.State.InGame)
         {
-            // ‰æ‘œ‚ğØ‚è‘Ö‚¦‚Ü‚·
-            image.sprite = button_down;
-            timer = 10;
-        }
-        else if (timer <= 0)
-        {
-            image.sprite = button_up;
-        }
-        else
-        {
-            timer--;
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                // ‰æ‘œ‚ğØ‚è‘Ö‚¦‚Ü‚·
+                image.sprite = button_down;
+                up = false;
+                timer = 10;
+            }
+            else if (up)
+            {
+                image.sprite = button_up;
+            }
+
+            if (Input.GetKeyUp(KeyCode.U))
+            {
+                up = true;
+            }
         }
     }
 }
