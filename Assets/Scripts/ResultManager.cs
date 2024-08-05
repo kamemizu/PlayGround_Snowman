@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    private static float highScore = -100;
+    [SerializeField] private GameObject HighScoreLine;
+
     [SerializeField] private GameObject stoper;
     [SerializeField] private Text snowmanHight;
     [SerializeField] private GameObject hakusyu;
     [SerializeField] private GameObject drum;
     [SerializeField] private GameObject jajan;
-    [SerializeField] private GameObject rulet;
+    //[SerializeField] private GameObject rulet;
     private AudioSource bgm;
     //エフェクトタイマー
     float effectTimer = 0;
@@ -49,7 +53,7 @@ public class ResultManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         bgm = GetComponent<AudioSource>();
         bgm.pitch = 0;
         p1Size = GameManager.getP1Size();
@@ -70,6 +74,7 @@ public class ResultManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HighScoreLine.transform.position = new Vector3(0, highScore, 0);
         cameraArea = camera.GetComponent<Camera>().ViewportToWorldPoint(Vector2.one);
         if (timer > 0)
         {
@@ -122,23 +127,17 @@ public class ResultManager : MonoBehaviour
                 }
                 if (effectTimer > 4)
                 {
-                    if(snowmanTall < p1.transform.position.y + p1.transform.localScale.y * 10)
+                    snowmanHight.text = string.Format("おおきさ\n" + "{0:##.###}" + "メートル", p1.transform.position.y + p1.transform.localScale.y * 10);
+                    hakusyu.SetActive(true);
+                    jajan.SetActive(true);
+                    if (highScore < p1.transform.position.y + p1.transform.localScale.y)
                     {
-                        snowmanTall += Time.deltaTime;
-                        snowmanHight.text = string.Format("おおきさ\n" + "{0:##.###}" + "メートル", snowmanTall);
-                        rulet.SetActive(true);
+                        highScore = p1.transform.position.y + p1.transform.localScale.y * 2;
                     }
-                    else
-                    {
-                        rulet.SetActive(false);
-                        hakusyu.SetActive(true);
-                        jajan.SetActive(true);
-                        Invoke("BGMPitch1", 1.0f);
-                    }
+                    Invoke("BGMPitch1", 1.0f);
                 }
             }
         }
-
     }
 
     private void BGMPitch1()
@@ -149,4 +148,5 @@ public class ResultManager : MonoBehaviour
     {
         SceneManager.LoadScene("Title");
     }
+
 }

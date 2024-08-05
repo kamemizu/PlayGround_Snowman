@@ -21,4 +21,9 @@ public class TitleManager : MonoBehaviour
     {
         SceneManager.LoadScene("Main");
     }
+
+    public void ScoreReset()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
